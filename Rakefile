@@ -23,11 +23,11 @@ nugets_restore :restore do |p|
         p.exe = 'tools/nuget.exe'
 end
 
-#desc 'Perform full build'
-#build :build => [:versioning, :restore] do |b|
-#    b.sln = 'AngularSuave.sln'
+desc 'Perform full build'
+build :build => [:versioning, :restore] do |b|
+    b.sln = 'AngularSuave.sln'
     # alt: b.file = 'src/MyProj.sln'
-#end
+end
       
 directory 'build/pkg'
 
