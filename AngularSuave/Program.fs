@@ -6,9 +6,11 @@ open Suave.Http.Redirection
 open Suave.Http.Applicatives
 open Suave.Http.Files
 open Suave.Web
+open Suave.Types
 open Suave.Http.Writers
 open System.Threading
 open System
+open System.Net
 open System.IO
 
 //add json to mimeTypes so browseFile returns it with correct mime type
@@ -17,14 +19,16 @@ let mimeTypes =
         >=> (function | ".json" -> mkMimeType "application/json" true | _ -> None)
 
 //define root path where the web stuff is located
-let rootPath = Path.GetFullPath "../../../Web"
-
+let rootPath = Path.GetFullPath "Web"
 //customize default server config with own mimetypes & homeFolder
 let webConfig = 
+    let ip = IPAddress.Parse "0.0.0.0"
     { 
         defaultConfig with 
             homeFolder = Some rootPath
+            bindings=[ HttpBinding.mk HTTP ip 8080us ] 
             mimeTypesMap = mimeTypes
+            logger = Logging.Loggers.saneDefaultsFor Logging.LogLevel.Verbose
     }
 
 //"api" call for getting the phone data
