@@ -19,12 +19,12 @@ build :build do |b|
 end
 
 task :paket_bootstrap do
-system 'tools/paket.bootstrapper.exe', clr_command: true unless   File.exists? 'tools/paket.exe'
+system '.paket/paket.bootstrapper.exe', clr_command: true unless   File.exists? '.paket/paket.exe'
 end
 
 desc 'restore all nugets as per the packages.config files'
 task :restore => :paket_bootstrap do
-  system 'tools/paket.exe', 'restore', clr_command: true
+  system '.paket/paket.exe', 'restore', clr_command: true
 end
 
 desc 'Perform full build'
