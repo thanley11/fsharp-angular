@@ -18,13 +18,16 @@ RUN groupadd -r app && \
     useradd -d /app -r -g app app && \
     mkdir -p /app/utils
 
-ADD  https://github.com/fsprojects/Paket/releases/download/2.39.2/paket.exe /app/utils/paket.exe
+#ADD  https://github.com/fsprojects/Paket/releases/download/2.39.2/paket.exe /app/utils/paket.exe
+ADD https://github.com/fsprojects/Paket/releases/download/2.40.2/paket.bootstrapper.exe /.paket/paket.bootstrapper.exe
+
+RUN .paket/paket.bootstrapper.exe
 
 COPY . ./src
 
 WORKDIR /src
 
-#RUN rake --trace
+RUN bundle exec rake 
 
 EXPOSE 8080
 
