@@ -26,6 +26,7 @@ COPY . ./app
 
 RUN chown -R app:app /app
 RUN chmod u+x /app/.paket/paket.bootstrapper.exe
+RUN chmod u+x /app/.paket/paket.exe
 #RUN /app/.paket/paket.bootstrapper.exe
 
 
@@ -36,5 +37,5 @@ WORKDIR /app
 
 EXPOSE 8080
 
-#ENTRYPOINT ["mono", "AngularSuave/bin/Debug/AngularSuave.exe"]
+ENTRYPOINT ["mono", "AngularSuave/bin/Debug/AngularSuave.exe"]
 

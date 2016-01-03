@@ -11,6 +11,10 @@ bundle exec rake
 #Run Project
 run mono exename.exe
 
+cd Web
+npm install
+
+
 desc 'package nugets - finds all projects and package them'
 nugets_pack :create_nugets do |p|
     p.files   = FileList['src/**/*.{csproj,fsproj,nuspec}'].
