@@ -14,22 +14,27 @@ RUN mozroots --import --sync --machine && \
     (yes | certmgr -ssl -m https://go.microsoft.com) && \
     (yes | certmgr -ssl -m https://nugetgallery.blob.core.windows.net)
 
+
 RUN groupadd -r app && \
     useradd -d /app -r -g app app && \
-    mkdir -p /app/utils
+    mkdir -p /.paket
 
-#ADD  https://github.com/fsprojects/Paket/releases/download/2.39.2/paket.exe /app/utils/paket.exe
-ADD https://github.com/fsprojects/Paket/releases/download/2.40.2/paket.bootstrapper.exe /.paket/paket.bootstrapper.exe
+#ADD https://github.com/fsprojects/Paket/releases/download/2.40.2/paket.exe /app/.paket/paket.exe
+ADD https://github.com/fsprojects/Paket/releases/download/2.40.2/paket.bootstrapper.exe /app/.paket/paket.bootstrapper.exe
 
-RUN .paket/paket.bootstrapper.exe
+COPY . ./app
 
-COPY . ./src
+RUN chown -R app:app /app
+RUN chmod u+x /app/.paket/paket.bootstrapper.exe
+#RUN /app/.paket/paket.bootstrapper.exe
 
-WORKDIR /src
 
-RUN bundle exec rake 
+WORKDIR /app
+
+#RUN /.paket/paket.bootstrapper.exe
+#RUN bundle exec rake 
 
 EXPOSE 8080
 
-ENTRYPOINT ["mono", "AngularSuave/bin/Debug/AngularSuave.exe"]
+#ENTRYPOINT ["mono", "AngularSuave/bin/Debug/AngularSuave.exe"]
 

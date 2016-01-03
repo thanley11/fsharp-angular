@@ -1,4 +1,14 @@
+
+#set runnable for app name
+chmod u+x [app name]
+
+#install dependencies
+./paket.exe install
+
+#Build project
 bundle exec rake
+
+#Run Project
 run mono exename.exe
 
 desc 'package nugets - finds all projects and package them'
